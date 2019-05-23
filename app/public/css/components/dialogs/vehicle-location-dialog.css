@@ -1,0 +1,45 @@
+#vehicle-location-dialog {
+    display: none;
+}
+
+div#vehicle-location-dialog div#location-container {
+    position:relative;
+    min-height:350px;
+}
+
+div#vehicle-location-dialog div#location-picture-container {
+    position:absolute;
+    left:0px;
+    top:0px;
+}
+
+div#vehicle-location-dialog img#location-picture {
+    width:100%;
+    border-color:#444;
+    border-width:2px;
+    border-style:solid;
+}
+
+div#vehicle-location-dialog div#location-map-container {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:200px;
+    height:120px;
+}
+
+div#vehicle-location-dialog img#location-map {
+    width:100%;
+    border-color:firebrick;
+    border-width:8px;
+    border-style:solid;
+}
+
+div#vehicle-location-dialog h4.branch {
+    color:firebrick;
+    margin-left:25px;
+}
+
+div#vehicle-location-dialog h4.branch>span {
+    color:#444;
+}

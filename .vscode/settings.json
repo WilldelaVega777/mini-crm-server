@@ -1,0 +1,24 @@
+{
+    "git.ignoreLimitWarning": true,
+    "workbench.colorTheme": "Isotope Contrast (rainglow)",
+    "files.exclude": {
+        "**/.gitignore"         : true,
+        "**/*.md"               : true,
+        "**/*.js"               : true,
+        "**/*.js.map"           : true,
+        "**/node_modules"       : true,
+        "**/bower.json"         : true,
+        "**/.bowerrc"           : true,
+        "**/package.json"       : true,
+        "**/package-lock.json"  : true,
+        "**/tsconfig.json"      : true,
+        "**/.editorconfig"      : true,
+        "**/.eslintrc"          : true,
+        "**/tslint.json"        : true,
+        "**/serviceWorker.ts"   : true,
+        "**/*.test.tsx"         : true,
+        "**/react-app-env.d.ts" : true,
+        "**/graphql-schema.json": true,
+        "**/types"              : true
+    }
+}

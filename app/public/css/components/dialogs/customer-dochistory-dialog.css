@@ -1,0 +1,24 @@
+#customer-dochistory-dialog {
+    display: none;
+}
+
+div#customer-dochistory-dialog table#dochistory-table {
+    margin: 0px auto;
+}
+
+div#customer-dochistory-dialog .dochistory-table-cell {
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
+    text-align: center !important;
+    padding: 7px;
+    font-size: 10px;
+}  
+
+div#customer-dochistory-dialog .dochistory-table-text {
+    padding-top: 7px;
+}
+
+div#customer-dochistory-dialog .dochistory-dochistory-text {
+    padding-top: 7px;
+}

@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+      "baseUrl": ".",
+      "paths": { "*": ["types/*"] },
+      "target": "es2015",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "isolatedModules": false,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "declaration": false,
+      "noImplicitAny": false,
+      "noImplicitUseStrict": false,
+      "removeComments": true,
+      "noLib": false,
+      "preserveConstEnums": true,
+      "suppressImplicitAnyIndexErrors": true,
+      "outDir": "app",
+      "sourceMap": true,
+      "watch": true
+  },
+  "exclude": [
+      "node_modules",
+      "typings/browser",
+      "typings/browser.d.ts",
+  ],
+  "compileOnSave": true,
+  "buildOnSave": true
+}

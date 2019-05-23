@@ -1,0 +1,79 @@
+#customer-options-dialog {
+    display: none;
+}
+
+div#customer-options-dialog table#options-table {
+    margin: 0px auto;
+}
+
+div#customer-options-dialog .options-table-cell {
+    min-width: 100px;
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+}  
+
+div#customer-options-dialog .options-table-text {
+    padding-top: 7px;
+}
+
+div#customer-options-dialog .options-table-text-off {
+    padding-top: 7px;
+    color: #ccc;
+}
+
+div#customer-options-dialog #options-table tr td a img {
+	transition: all 0.5s;
+}
+
+div#customer-options-dialog #options-table tr td a img.brightness:hover 
+{
+	filter: brightness(1.20);
+}
+
+div#customer-options-dialog #options-table tr td a img.opaque:hover 
+{
+	filter: opacity(100%);
+}
+
+div#customer-options-dialog #options-table tr td a img.blurry:hover 
+{
+	filter: blur(1px);
+}
+
+
+div#customer-options-dialog table#options-table>tr>td>a.hand-cursor {
+    cursor:hand;
+    outline: 0;
+    outline-color: white;
+}
+
+div#customer-options-dialog table#options-table img.option-image {
+    height:38px;
+    margin-top:-5px;
+}
+
+div#customer-options-dialog div#repairPictures {
+    max-height:338px;
+    overflow-y:scroll;
+}
+
+
+div#customer-options-dialog .brightness { filter: brightness(1.0); }
+
+div#customer-options-dialog .opaque { filter: opacity(70%); }
+
+div#customer-options-dialog .blurry { filter: blur(0px); }
+
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer .labelImageTitle {
+    margin-top: 5px;
+}
+
+.nanogallery_theme_default .nanoGalleryContainer .nanoGalleryThumbnailContainer {
+    background-color: #444 !important;
+    border-color: #444 !important;
+}
+
+div#customer-options-dialog .turned-off {
+    filter: grayscale(100%);
+}

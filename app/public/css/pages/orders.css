@@ -1,0 +1,121 @@
+/* ----------------------------------------------- */
+/* HTML Overrides                                  */
+/* ----------------------------------------------- */
+* {
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    display: none; 
+} 
+
+.btn:not(.btn-raised):not(.btn-link):hover {
+    background-color: #fddd35 !important;
+    color: firebrick !important;
+}
+
+h1 {
+  margin-left: 10px;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+p {
+  margin: 0 0 10px 40px;
+}
+
+table {
+  font-size: 14px;
+}
+
+th td {
+  vertical-align: middle !important;;
+  text-align: center !important;
+}
+
+
+/* ----------------------------------------------- */
+/* Main Card & Container                           */
+/* ----------------------------------------------- */
+.pages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    padding: 0;
+    overflow: auto;
+    padding:30px;
+    margin-top:50px;
+}
+
+.pages > div {
+    padding: 0 5px;
+    padding-top: 64px;
+    margin: 0;
+}
+
+.pages .header {
+    color: rgb(82, 101, 162);
+}
+
+.page {
+    transform: translateY(1080px);
+    transition: transform 0 linear;
+    display: none;
+    opacity: 0;
+    font-size: 16px;
+    margin-left: 1em;
+}
+
+.page.active {
+    transform: translateY(0px);
+    transition: all 0.3s ease-out;
+    display: block;
+    opacity: 1;
+}
+
+.main-card {
+    min-width: 1250px !important; 
+    margin-top: 110px !important;
+}
+
+.title-encargado {
+    margin-left: 15px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
+
+
+/* ----------------------------------------------- */
+/* Print Button                                    */
+/* ----------------------------------------------- */
+.print-button-container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.print-button {
+    color:white !important;
+    cursor:hand;
+}
+
+.print-button-intranet {
+    top:-20px;
+}
+
+/* ----------------------------------------------- */
+/* Info Panel                                      */
+/* ----------------------------------------------- */
+.panel.panel-info > .panel-heading {
+    background-color: #fddd35;
+    color: #444;
+}
+
+/* Filter Dropdown */
+.order-filter-container {
+    margin-top: 7px;
+}
+

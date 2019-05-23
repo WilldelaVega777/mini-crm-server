@@ -1,0 +1,44 @@
+{
+    "name": "graphql-scaffold",
+    "description": "Proyecto de Scaffolding para Node/Express/GraphQL",
+    "main": "app/boot.js",
+    "authors": [
+      "Will de la Vega / Andrea Rivera C. / Alison Báez Cerón"
+    ],
+    "license": "All rights reserved",
+    "moduleType": [],
+    "homepage": "https://geosysonline.com",
+    "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "public/lib"
+    ],
+    "dependencies": {
+      "bootstrap": "^4.0.0",
+      "font-awesome": "^4.5.0",
+      "observe-js": "^0.5.7",
+      "moment": "^2.15.2",
+      "lodash": "^4.16.6"
+    },
+    "overrides": {
+      "bootstrap": {
+        "main": [
+          "dist/js/bootstrap.js",
+          "dist/css/bootstrap.min.css",
+          "less/bootstrap.less"
+        ]
+      },
+      "font-awesome": {
+        "main": [
+          "less/font-awesome.less",
+          "css/font-awesome.min.css",
+          "scss/font/awesome.scss"
+        ]
+      }
+    },
+    "resolutions": {
+      "bootstrap": "v4-dev",
+      "jquery": "1.9.1 - 3"
+    }
+  }

@@ -1,0 +1,68 @@
+#---------------------------------------------
+# Types
+#---------------------------------------------
+type Customer {
+    id          : ID!
+    first_name  : String!
+    last_name   : String!
+    company     : String!
+    age         : Int!
+    type        : CustomerType!
+    email       : String!
+    orders      : [Order]
+}
+#---------------------------------------------
+type Email {
+    email : String
+}
+#---------------------------------------------
+type Order {
+    product: String
+    price  : Int
+}
+#---------------------------------------------
+# Enums
+#---------------------------------------------
+enum CustomerType {
+    BASIC
+    PREMIUM
+}
+
+#---------------------------------------------
+# Queries
+#---------------------------------------------
+type Query {
+    customers(limit: Int): [Customer!]!
+    getCustomer(id: ID): Customer
+}
+
+#---------------------------------------------
+# Mutation Input Types
+#---------------------------------------------
+input CustomerInput {
+    id          : ID,
+    first_name  : String!
+    last_name   : String!
+    company     : String!
+    age         : Int!
+    type        : CustomerType!
+    email       : String!
+    orders      : [OrderInput]
+}
+#---------------------------------------------
+input EmailInput {
+    email       : String!
+}
+#---------------------------------------------
+input OrderInput {
+    product     : String!
+    price       : Int!
+}
+#---------------------------------------------
+# Mutations
+#---------------------------------------------
+type Mutation {
+    createCustomer(input: CustomerInput) : Customer
+    updateCustomer(input: CustomerInput) : Customer
+    removeCustomer(input: ID!) : String
+}

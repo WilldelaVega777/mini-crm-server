@@ -1,0 +1,32 @@
+/* ----------------------------------------------- */
+/* Footer                                          */
+/* ----------------------------------------------- */
+.footer {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: red;
+  background: url(/images/barra-header2.png)10%;
+  background-size: cover;
+  height: 38px;
+  color: white;
+  font-size: 11pt;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 8px;
+  padding-bottom: 7px;
+  box-shadow: 1px 3px 14px 1px rgba(0,0,0,0.75);
+}
+
+.footer-general {
+    min-width: 100%;
+}
+
+.footer-left {
+    float: left;
+}
+
+.footer-right {
+    float: right;
+}
