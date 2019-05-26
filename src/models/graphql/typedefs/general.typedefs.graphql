@@ -1,5 +1,5 @@
 #---------------------------------------------
-# Types
+# Data Types
 #---------------------------------------------
 type Customer {
     id          : ID!
@@ -8,7 +8,6 @@ type Customer {
     company     : String!
     age         : Int!
     type        : CustomerType!
-    email       : String!
     orders      : [Order]
 }
 #---------------------------------------------
@@ -29,11 +28,27 @@ enum CustomerType {
 }
 
 #---------------------------------------------
-# Queries
+# Metadata Types
+#---------------------------------------------
+type ValidationDescriptor {
+    field       : String
+    type        : String
+    required    : Boolean!
+    max         : Int
+    min         : Int
+    regex       : String
+}
+
+#---------------------------------------------
+# Queries (Data)
 #---------------------------------------------
 type Query {
+    # Data
     customers(limit: Int): [Customer!]!
     getCustomer(id: ID): Customer
+
+    # Validations Metadata
+    getCustomerValidations : [ValidationDescriptor!]!
 }
 
 #---------------------------------------------

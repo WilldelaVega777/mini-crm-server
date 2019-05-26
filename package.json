@@ -4,9 +4,10 @@
   "description": "Project with Express, Mongo, Typescript and improved modularized components.",
   "main": "launch.js",
   "scripts": {
+    "tsnode:serve": "ts-node-dev --respawn --transpileOnly ./src/boot.ts",
+    "node:serve": "node app/boot.js",
     "start": "node app/boot.js",
-    "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./src/boot.ts"
+    "tsc": "tsc"
   },
   "keywords": [
     "Express",
@@ -57,7 +58,9 @@
     "@types/passport": "1.0.0",
     "@types/passport-local": "1.0.33",
     "@types/serve-favicon": "2.2.30",
+    "codelyzer": "^5.0.1",
     "ts-node-dev": "1.0.0-pre.39",
+    "tslint": "^5.16.0",
     "typescript": "3.4.5"
   }
 }

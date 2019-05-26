@@ -14,7 +14,7 @@
         "**/tsconfig.json"      : true,
         "**/.editorconfig"      : true,
         "**/.eslintrc"          : true,
-        "**/tslint.json"        : true,
+        "**/tslint.json"        : false,
         "**/serviceWorker.ts"   : true,
         "**/*.test.tsx"         : true,
         "**/react-app-env.d.ts" : true,
