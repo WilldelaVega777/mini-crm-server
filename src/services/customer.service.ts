@@ -1,17 +1,15 @@
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
-import * as mongoose     from "mongoose";
-import { DocumentQuery } from "mongoose";
+import * as mongoose     from 'mongoose';
+import { DocumentQuery } from 'mongoose';
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
-import { customerModel } from "../models/mongo/customer.model"
-import { emailModel }    from "../models/mongo/email.model";
-import { orderModel }    from "../models/mongo/order.model";
-
-import { Customer }      from "../models/mongo/customer.model";
-import { CustomerTypes } from "../models/mongo/enums/customer-types.enum";
+import * as Models       from '../models/mongo/models';
+import { emailModel }    from '../models/mongo/email.model';
+import { orderModel }    from '../models/mongo/order.model';
+import { CustomerTypes } from '../models/mongo/enums/customer-types.enum';
 
 
 //--------------------------------------------------------------------------
@@ -41,24 +39,24 @@ export class CustomerService
     //----------------------------------------------------------------------
     // Public Methods Section:
     //----------------------------------------------------------------------
-    public getCustomers(limit: number): Promise<Customer[]>
+    public getCustomers(limit: number): Promise<Models.Customer[]>
     {
         return new Promise((resolve, reject) => {
-            customerModel.find({}).limit(limit)
-            .then((customers: Customer[]) => {
+            Models.customerModel.find({}).limit(limit)
+            .then((customers: Models.Customer[]) => {
                 resolve(customers.map(customer => {
                     customer.id = customer['_id']
-                    return customer
-                }))
+                    return customer;
+                }));
             })
-            .catch(error => reject(error))
+            .catch(error => reject(error));
         });
     }
     //----------------------------------------------------------------------
-    public getCustomerById(id: string): Promise<Customer>
+    public getCustomerById(id: string): Promise<Models.Customer>
     {
         return new Promise((resolve, reject) => {
-            customerModel.findById(
+            Models.customerModel.findById(
                 id,
                 (error, customer) => {
                     if (error)
@@ -70,21 +68,21 @@ export class CustomerService
                         resolve(customer);
                     }
                 }
-            )
+            );
         });
     }
     //----------------------------------------------------------------------
-    public async createCustomer(input: Customer): Promise<Customer>
+    public async createCustomer(input: Models.Customer): Promise<Models.Customer>
     {
-        const newCustomer = await customerModel.create(input);
+        const newCustomer = await Models.customerModel.create(input);
         newCustomer.id = newCustomer._id;
         return Promise.resolve(newCustomer);
     }
     //----------------------------------------------------------------------
-    public updateCustomer(input: Customer): Promise<Customer>
+    public updateCustomer(input: Models.Customer): Promise<Models.Customer>
     {
         return new Promise((resolve, reject) => {
-            customerModel.findOneAndUpdate(
+            Models.customerModel.findOneAndUpdate(
                 { _id: input.id },
                 input,
                 { new: true },
@@ -106,7 +104,7 @@ export class CustomerService
     public removeCustomer(input: string): Promise<string>
     {
         return new Promise((resolve, reject) => {
-            customerModel.findOneAndRemove(
+            Models.customerModel.findOneAndRemove(
                 {_id: input},
                 (error) => {
                     if (error)
@@ -115,10 +113,10 @@ export class CustomerService
                     }
                     else
                     {
-                        resolve("Chingó su madre este registro!");
+                        resolve('Chingó su madre este registro!');
                     }
                 }
-            )
+            );
         });
     }
 }

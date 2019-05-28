@@ -12,6 +12,7 @@ import { ParsersMiddleware }        from './middlewares/parsers.middleware';
 import { StaticContentMiddleware }  from './middlewares/static.middleware';
 import { PassportMiddleware }       from './middlewares/passport.middleware';
 import { GraphQLMiddleware }        from './middlewares/graphql.middleware';
+import { CORSMiddleware }           from './middlewares/cors.middleware';
 //---------------------------------------------------------------
 // Database:
 //---------------------------------------------------------------
@@ -21,6 +22,7 @@ import { Database }             from './config/database';
 //---------------------------------------------------------------
 import { SystemRoutes }         from './routes/system.routes';
 import { AuthRoutes }           from './routes/auth.routes';
+import { ValidationRoutes }     from './routes/validation.routes';
 
 
 //---------------------------------------------------------------
@@ -28,21 +30,6 @@ import { AuthRoutes }           from './routes/auth.routes';
 //---------------------------------------------------------------
 class Server
 {
-    //-----------------------------------------------------------
-    // Private Fields Section:
-    //-----------------------------------------------------------
-    private router       : express.Router;
-    private app          : express.Application;
-    private upload       : any;
-
-
-    //-----------------------------------------------------------
-    // Bootstrap App Section:
-    //-----------------------------------------------------------
-    public static bootstrap(): Server
-    {
-        return new Server();
-    }
 
     //-----------------------------------------------------------
     // Constructor Method Section:
@@ -59,6 +46,21 @@ class Server
         this.configMiddlewares(this.app);
         this.configureRouter(this.app);
     }
+
+    //-----------------------------------------------------------
+    // Bootstrap App Section:
+    //-----------------------------------------------------------
+    public static bootstrap(): Server
+    {
+        return new Server();
+    }
+
+    //-----------------------------------------------------------
+    // Private Fields Section:
+    //-----------------------------------------------------------
+    private router       : express.Router;
+    private app          : express.Application;
+    private upload       : any;
 
 
     //-----------------------------------------------------------
@@ -80,6 +82,7 @@ class Server
         ParsersMiddleware.getInstance(app).configure();
         StaticContentMiddleware.getInstance(app).configure();
         PassportMiddleware.getInstance(app).configure();
+        CORSMiddleware.getInstance(app).configure();
         GraphQLMiddleware.getInstance().configure(app);
     }
     //-----------------------------------------------------------
@@ -91,6 +94,7 @@ class Server
 
         SystemRoutes.getInstance(app).defineRoutes();
         AuthRoutes.getInstance(app).defineRoutes();
+        ValidationRoutes.getInstance(app).defineRoutes();
     }
 }
 //---------------------------------------------------------------

@@ -1,7 +1,7 @@
 {
     "rules": {
       "arrow-return-shorthand": true,
-      "callable-types": true,
+      "callable-types": false,
       "class-name": true,
       "curly": true,
       "deprecation": {
@@ -29,9 +29,9 @@
         true,
         {
           "order": [
+            "static-method",
             "static-field",
             "instance-field",
-            "static-method",
             "instance-method"
           ]
         }

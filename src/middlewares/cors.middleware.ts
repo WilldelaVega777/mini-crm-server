@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------------------------
 // Imports Section: (Node Libraries)
 //--------------------------------------------------------------------------------------------------
-import * as express      from 'express';
-import * as serveFavicon from 'serve-favicon';
+import * as express             from 'express';
+import * as cors                from 'cors';
 
 
 //--------------------------------------------------------------------------------------------------
@@ -13,24 +13,24 @@ module AppMiddlewares
     //----------------------------------------------------------------------------------------------
     // Class Section
     //----------------------------------------------------------------------------------------------
-    export class StaticContentMiddleware
+    export class CORSMiddleware
     {
         //------------------------------------------------------------------------------------------
         // Static Methods Section
         //------------------------------------------------------------------------------------------
-        public static getInstance(rt: express.Application): StaticContentMiddleware
+        public static getInstance(rt: express.Application): CORSMiddleware
         {
-            if (StaticContentMiddleware._instance == null)
+            if (CORSMiddleware._instance == null)
             {
-                StaticContentMiddleware._instance = new StaticContentMiddleware(rt);
+                CORSMiddleware._instance = new CORSMiddleware(rt);
             }
-            return StaticContentMiddleware._instance;
+            return CORSMiddleware._instance;
         }
 
         //------------------------------------------------------------------------------------------
         // Static Fields Section
         //------------------------------------------------------------------------------------------
-        private static _instance: StaticContentMiddleware;
+        private static _instance: CORSMiddleware;
 
         //------------------------------------------------------------------------------------------
         // Private Fields Section:
@@ -52,11 +52,7 @@ module AppMiddlewares
         //------------------------------------------------------------------------------------------
         public configure()
         {
-            this.app.use(express.static(__dirname + '../../../app/public'));
-            this.app.use(express.static(__dirname + '../../../app/uploads'));
-            this.app.use(serveFavicon(__dirname + '../../../app/public/images/favicon.ico'));
-            this.app.set('view engine', 'ejs');
-            this.app.set('views', __dirname + '../../../app/views');
+            this.app.use(cors());
         }
     }
 }

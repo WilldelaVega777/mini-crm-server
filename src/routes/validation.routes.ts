@@ -1,13 +1,13 @@
 //--------------------------------------------------------------------------------------------------
 // Imports Section: (Node Libraries)
 //--------------------------------------------------------------------------------------------------
-import * as express         from 'express';
+import * as express from 'express';
 
 
 //--------------------------------------------------------------------------------------------------
 // Controllers:
 //--------------------------------------------------------------------------------------------------
-import { SystemController } from '../controllers/system.controller';
+import { ValidationsController } from '../controllers/validations.controller';
 
 
 //--------------------------------------------------------------------------------------------------
@@ -18,24 +18,24 @@ module AppRoutes
     //----------------------------------------------------------------------------------------------
     // Class Section
     //----------------------------------------------------------------------------------------------
-    export class SystemRoutes
+    export class ValidationRoutes
     {
         //---------------------------------------------------------------------
         // Static Methods Section
         //---------------------------------------------------------------------
-        public static getInstance(rt: express.Router): SystemRoutes
+        public static getInstance(rt: express.Router): ValidationRoutes
         {
-            if (SystemRoutes._instance != null)
+            if (ValidationRoutes._instance != null)
             {
-                return SystemRoutes._instance;
+                return ValidationRoutes._instance;
             }
-            return new SystemRoutes(rt);
+            return new ValidationRoutes(rt);
         }
 
         //---------------------------------------------------------------------
         // Static Fields Section
         //---------------------------------------------------------------------
-        private static _instance: SystemRoutes;
+        private static _instance: ValidationRoutes;
 
         //---------------------------------------------------------------------
         // Public Fields Section:
@@ -58,11 +58,11 @@ module AppRoutes
         public defineRoutes()
         {
             // Controller:
-            const systemController: SystemController =
-                new SystemController();
+            const validationsController: ValidationsController =
+                new ValidationsController();
 
             // Routes:
-            this.router.get('/api/health', systemController.checkHealth);
+            this.router.get('/api/validations/:for', validationsController.getValidators);
         }
 
     }

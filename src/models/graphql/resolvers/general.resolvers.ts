@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------
 // Imports Section:
 //---------------------------------------------------------------------
-import { Customer }             from '../../mongo/customer.model';
+import * as Models              from '../../mongo/models';
 import { CustomerService }      from '../../../services/customer.service';
 
 //---------------------------------------------------------------------
@@ -26,7 +26,7 @@ export const resolvers = {
         getCustomerValidations: () =>
         {
             // Create Instance to Extract Validators
-            const customer = new Customer();
+            const customer = new Models.Customer();
 
             // Return validators
             return customer['__validators'];
@@ -50,4 +50,3 @@ export const resolvers = {
         }
     }
 };
-
