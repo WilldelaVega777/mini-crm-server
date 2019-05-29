@@ -48,7 +48,7 @@ export class Customer extends Typegoose
 
     @validations({ required: true, max: 40, min: 8, regex: Formats.email })
     @prop({ required: false })
-    public email: Email[];
+    public emails: Email[];
 
     @prop({ required: false })
     public orders: Order[];

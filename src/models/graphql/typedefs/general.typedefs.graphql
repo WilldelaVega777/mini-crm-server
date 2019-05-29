@@ -7,7 +7,7 @@ type Customer {
     last_name   : String!
     company     : String!
     age         : Int!
-    email       : [Email!]!
+    emails      : [Email!]!
     type        : CustomerType!
     orders      : [Order]
 }
@@ -47,7 +47,7 @@ input CustomerInput {
     company     : String!
     age         : Int!
     type        : CustomerType!
-    email       : [EmailInput!]!
+    emails      : [EmailInput!]!
     orders      : [OrderInput]
 }
 #---------------------------------------------
