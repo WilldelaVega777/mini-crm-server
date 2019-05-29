@@ -2,15 +2,11 @@
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
 import * as mongoose     from 'mongoose';
-import { DocumentQuery } from 'mongoose';
+
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
 import * as Models       from '../models/mongo/models';
-import { emailModel }    from '../models/mongo/email.model';
-import { orderModel }    from '../models/mongo/order.model';
-import { CustomerTypes } from '../models/mongo/enums/customer-types.enum';
-
 
 //--------------------------------------------------------------------------
 // Service Class:

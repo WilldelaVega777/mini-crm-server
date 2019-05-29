@@ -20,16 +20,6 @@ export const resolvers = {
         getCustomer: (root: any, {id}) =>
         {
             return CustomerService.getInstance().getCustomerById(id);
-        },
-
-        // Validator Resolvers:
-        getCustomerValidations: () =>
-        {
-            // Create Instance to Extract Validators
-            const customer = new Models.Customer();
-
-            // Return validators
-            return customer['__validators'];
         }
     },
     //-----------------------------------------------------------------

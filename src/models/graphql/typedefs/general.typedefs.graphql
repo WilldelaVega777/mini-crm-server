@@ -7,6 +7,7 @@ type Customer {
     last_name   : String!
     company     : String!
     age         : Int!
+    email       : [Email!]!
     type        : CustomerType!
     orders      : [Order]
 }
@@ -28,27 +29,12 @@ enum CustomerType {
 }
 
 #---------------------------------------------
-# Metadata Types
-#---------------------------------------------
-type ValidationDescriptor {
-    field       : String
-    type        : String
-    required    : Boolean!
-    max         : Int
-    min         : Int
-    regex       : String
-}
-
-#---------------------------------------------
 # Queries (Data)
 #---------------------------------------------
 type Query {
     # Data
     customers(limit: Int): [Customer!]!
     getCustomer(id: ID): Customer
-
-    # Validations Metadata
-    getCustomerValidations : [ValidationDescriptor!]!
 }
 
 #---------------------------------------------
@@ -61,7 +47,7 @@ input CustomerInput {
     company     : String!
     age         : Int!
     type        : CustomerType!
-    email       : String!
+    email       : [EmailInput!]!
     orders      : [OrderInput]
 }
 #---------------------------------------------

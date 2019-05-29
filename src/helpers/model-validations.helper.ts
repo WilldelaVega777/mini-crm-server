@@ -91,11 +91,6 @@ function withValue(value: any)
     return d;
 }
 //---------------------------------------------------------------------
-function getTypeofProperty<T, K extends keyof T>(o: T, name: K)
-{
-    return typeof o[name];
-}
-//---------------------------------------------------------------------
 function getTypeString(chunk: string): string
 {
     return chunk.substring((chunk.indexOf('function') + 9), chunk.indexOf('('));
