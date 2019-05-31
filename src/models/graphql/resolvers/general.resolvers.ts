@@ -3,6 +3,7 @@
 //---------------------------------------------------------------------
 import * as Models              from '../../mongo/models';
 import { CustomerService }      from '../../../services/customer.service';
+import { Customer } from '../../mongo/models';
 
 //---------------------------------------------------------------------
 // Resolvers Section

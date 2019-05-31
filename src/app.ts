@@ -44,7 +44,7 @@ class Server
 
         // Configure App.
         this.configMiddlewares(this.app);
-        this.configureRouter(this.app);
+        this.configRouter(this.app);
     }
 
     //-----------------------------------------------------------
@@ -86,7 +86,7 @@ class Server
         GraphQLMiddleware.getInstance().configure(app);
     }
     //-----------------------------------------------------------
-    private configureRouter(app: express.Application)
+    private configRouter(app: express.Application)
     {
         app.get('/', function (req, res) {
             res.send('App Funciona');

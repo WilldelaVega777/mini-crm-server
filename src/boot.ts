@@ -2,7 +2,6 @@
 // Imports Section
 //---------------------------------------------------------------
 import { ExpressApp }               from './app';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 //---------------------------------------------------------------
 // Config and Launch Express Server

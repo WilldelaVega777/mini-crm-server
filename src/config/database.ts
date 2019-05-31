@@ -30,7 +30,7 @@ export class Database
     //------------------------------------------------------------------------------------------
     // Constructor Method Section
     //------------------------------------------------------------------------------------------
-    constructor()
+    private constructor()
     {
         // console.log('Database at ' + process.env.MONGODB_URI);
     }

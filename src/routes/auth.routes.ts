@@ -1,13 +1,13 @@
 //--------------------------------------------------------------------------------------------------
 // Imports Section: (Node Libraries)
 //--------------------------------------------------------------------------------------------------
-import * as express             from "express";
-import * as passport            from "passport";
+import * as express             from 'express';
+import * as passport            from 'passport';
 
 //--------------------------------------------------------------------------------------------------
 // Controllers:
 //--------------------------------------------------------------------------------------------------
-import { AuthController }       from "../controllers/auth.controller";
+import { AuthController }       from '../controllers/auth.controller';
 
 
 //--------------------------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ module AppRoutes
                 new AuthController();
 
             // Routes:
-            this.router.get("/login", authController.showLogin);
+            this.router.get('/login', authController.showLogin);
             // this.router.get("/login", (req: express.Request, res: express.Response) => {
             //     res.send('auth funciona!');
             // });

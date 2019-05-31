@@ -1,16 +1,16 @@
 //--------------------------------------------------------------------------------------------------
 // Imports Section (Node Libraries):
 //--------------------------------------------------------------------------------------------------
-import * as express from "express";
+import * as express from 'express';
 //--------------------------------------------------------------------------------------------------
 // Imports Section (Services):
 //--------------------------------------------------------------------------------------------------
-import { AuthService }      from "../services/auth.service";
-import { UserService }      from "../services/user.service";
+import { AuthService }      from '../services/auth.service';
+import { UserService }      from '../services/user.service';
 //--------------------------------------------------------------------------------------------------
 // Imports Section (Schemas):
 //--------------------------------------------------------------------------------------------------
-import { User }             from "../models/mongo/express-schemas/user.schema";
+import { User }             from '../models/mongo/express-schemas/user.schema';
 
 //--------------------------------------------------------------------------------------------------
 // Module Section
@@ -27,7 +27,7 @@ module AppControllers
         //------------------------------------------------------------------------------------------
         public showLogin(req: express.Request, res: express.Response, next: express.NextFunction)
         {
-            res.render("pages/login/index", { "PageTitle": "Acceso al Sistema" });
+            res.render('pages/login/index', { 'PageTitle': 'Acceso al Sistema' });
         }
 
         //------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module AppControllers
         //------------------------------------------------------------------------------------------
         public authenticatedAction(req: express.Request, res: express.Response, next: express.NextFunction)
         {
-            res.redirect("/home");
+            res.redirect('/home');
         }
 
         //------------------------------------------------------------------------------------------
@@ -52,15 +52,15 @@ module AppControllers
                 .then((authData: User) => {
                     if (!authData)
                     {
-                        console.log("Error autenticando usuario.");
+                        console.log('Error autenticando usuario.');
                         done(null, false);
                         return;
                     }
                     return done(
                         null,
                         {
-                            "name"      : authData.name,
-                            "role"      : authData.role
+                            'name'      : authData.name,
+                            'role'      : authData.role
                         }
                     );
                 })
@@ -74,7 +74,7 @@ module AppControllers
         //------------------------------------------------------------------------------------------
         public postAuthenticate(req: express.Request, res: express.Response, next: express.NextFunction)
         {
-            console.log("postAuthenticate");
+            console.log('postAuthenticate');
         }
 
         //------------------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ module AppControllers
 
             if (user)
             {
-                return cb(null, { "id": userId, "name": user.name, "role": user.role });
+                return cb(null, { 'id': userId, 'name': user.name, 'role': user.role });
             }
         }
     }

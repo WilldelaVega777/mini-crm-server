@@ -41,7 +41,7 @@ type Query {
 # Mutation Input Types
 #---------------------------------------------
 input CustomerInput {
-    id          : ID,
+    id          : ID!,
     first_name  : String!
     last_name   : String!
     company     : String!
