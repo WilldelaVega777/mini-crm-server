@@ -15,8 +15,8 @@ export const resolvers = {
     Query: {
 
         // Data Resolvers:
-        customers: (root: any, {limit}) => {
-            return CustomerService.getInstance().getCustomers(limit);
+        customers: (root: any, {limit, offset}) => {
+            return CustomerService.getInstance().getCustomers(limit, offset);
         },
         getCustomer: (root: any, {id}) =>
         {

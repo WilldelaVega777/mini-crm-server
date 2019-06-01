@@ -33,7 +33,7 @@ enum CustomerType {
 #---------------------------------------------
 type Query {
     # Data
-    customers(limit: Int): [Customer!]!
+    customers(limit: Int, offset: Int): [Customer!]!
     getCustomer(id: ID): Customer
 }
 
@@ -41,7 +41,7 @@ type Query {
 # Mutation Input Types
 #---------------------------------------------
 input CustomerInput {
-    id          : ID!,
+    id          : ID,
     first_name  : String!
     last_name   : String!
     company     : String!

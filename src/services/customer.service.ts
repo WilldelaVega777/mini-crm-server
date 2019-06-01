@@ -35,10 +35,10 @@ export class CustomerService
     //----------------------------------------------------------------------
     // Public Methods Section:
     //----------------------------------------------------------------------
-    public getCustomers(limit: number): Promise<Models.Customer[]>
+    public getCustomers(limit: number, offset: number): Promise<Models.Customer[]>
     {
         return new Promise((resolve, reject) => {
-            Models.customerModel.find({}).limit(limit)
+            Models.customerModel.find({}).limit(limit).skip(offset)
             .then((customers: Models.Customer[]) => {
                 resolve(customers.map(customer => {
                     customer.id = customer['_id']
