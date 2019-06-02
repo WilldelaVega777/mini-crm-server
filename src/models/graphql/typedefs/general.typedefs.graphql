@@ -21,6 +21,18 @@ type Order {
     price  : Int
 }
 #---------------------------------------------
+# Composite Metadata Types
+#---------------------------------------------
+type CustomerPaginated {
+    customers   : [Customer!]!
+    metadata    : PaginatedMetadata!
+}
+#---------------------------------------------
+type PaginatedMetadata {
+    totalRecords: Int!
+}
+
+#---------------------------------------------
 # Enums
 #---------------------------------------------
 enum CustomerType {
@@ -34,6 +46,7 @@ enum CustomerType {
 type Query {
     # Data
     customers(limit: Int, offset: Int): [Customer!]!
+    getCustomers(limit: Int, offset: Int): CustomerPaginated!
     getCustomer(id: ID): Customer
 }
 

@@ -7,6 +7,7 @@ import * as mongoose     from 'mongoose';
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
 import * as Models       from '../models/mongo/models';
+import { PaginatedMetadata } from '../models/mongo/models';
 
 //--------------------------------------------------------------------------
 // Service Class:
@@ -41,11 +42,46 @@ export class CustomerService
             Models.customerModel.find({}).limit(limit).skip(offset)
             .then((customers: Models.Customer[]) => {
                 resolve(customers.map(customer => {
-                    customer.id = customer['_id']
+                    customer.id = customer['_id'];
                     return customer;
                 }));
             })
             .catch(error => reject(error));
+        });
+    }
+    //----------------------------------------------------------------------
+    public getCustomersPaginated(limit: number, offset: number): Promise<Models.CustomersPaginated>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            Models.customerModel.find({}).limit(limit).skip(offset)
+                .then((customers: Models.Customer[]) =>
+                {
+                    const readyCustomers: Models.Customer[] = (customers.map(customer =>
+                    {
+                        customer.id = customer['_id'];
+                        return customer;
+                    }));
+
+                    Models.customerModel.countDocuments({}, (error, count) => {
+                        if (error)
+                        {
+                            reject(error);
+                        }
+                        else
+                        {
+                            const customersMetadata: PaginatedMetadata =
+                                new Models.PaginatedMetadata(count);
+
+                            resolve(
+                                new Models.CustomersPaginated(
+                                    readyCustomers, customersMetadata
+                                )
+                            );
+                        }
+                    });
+                })
+                .catch(error => reject(error));
         });
     }
     //----------------------------------------------------------------------

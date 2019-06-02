@@ -18,6 +18,9 @@ export const resolvers = {
         customers: (root: any, {limit, offset}) => {
             return CustomerService.getInstance().getCustomers(limit, offset);
         },
+        getCustomers: (root: any, {limit, offset}) => {
+              return CustomerService.getInstance().getCustomersPaginated(limit, offset);
+        },
         getCustomer: (root: any, {id}) =>
         {
             return CustomerService.getInstance().getCustomerById(id);

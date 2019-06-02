@@ -1,17 +1,16 @@
 //--------------------------------------------------------------------------
-// Imports Section
+// Imports Section (Libraries)
 //--------------------------------------------------------------------------
 import { Typegoose }        from 'typegoose';
 import { prop }             from 'typegoose';
 
 //--------------------------------------------------------------------------
-// Imports Section
+// Imports Section (App Dependencies)
 //--------------------------------------------------------------------------
 import { Email }                    from './email.model';
 import { Order }                    from './order.model';
 import { CustomerTypes }            from './enums/customer-types.enum';
 import { validations }              from '../../helpers/model-validations.helper';
-import { ValidationDescriptor }     from '../../helpers/model-validations.helper';
 import { Formats }                  from '../../helpers/model-validations.helper';
 
 
