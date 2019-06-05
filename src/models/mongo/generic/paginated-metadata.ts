@@ -17,6 +17,10 @@ export class PaginatedMetadata
         {
             this.totalRecords = pTotalRecords;
         }
+        else
+        {
+            this.totalRecords = 0;
+        }
     }
 }
 

@@ -1,31 +1,31 @@
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
-import * as mongoose            from 'mongoose';
+import * as mongoose from 'mongoose';
 
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
-import * as Models              from '../models/mongo/models';
-import { PaginatedMetadata }    from '../models/mongo/models';
+import * as Models from '../models/mongo/models';
+import { PaginatedMetadata } from '../models/mongo/models';
 
 //--------------------------------------------------------------------------
 // Service Class:
 //--------------------------------------------------------------------------
-export class CustomerService
+export class ProductService
 {
     //----------------------------------------------------------------------
     // Singleton Implementation:
     //----------------------------------------------------------------------
-    public static getInstance() : CustomerService
+    public static getInstance(): ProductService
     {
-        if (CustomerService._instance == null)
+        if (ProductService._instance == null)
         {
-            CustomerService._instance = new CustomerService();
+            ProductService._instance = new ProductService();
         }
-        return CustomerService._instance;
+        return ProductService._instance;
     }
-    private static _instance: CustomerService;
+    private static _instance: ProductService;
 
 
     //----------------------------------------------------------------------
@@ -36,46 +36,50 @@ export class CustomerService
     //----------------------------------------------------------------------
     // Public Methods Section:
     //----------------------------------------------------------------------
-    public getCustomers(limit: number, offset: number): Promise<Models.Customer[]>
-    {
-        return new Promise((resolve, reject) => {
-            Models.customerModel.find({}).limit(limit).skip(offset)
-            .then((customers: Models.Customer[]) => {
-                resolve(customers.map(customer => {
-                    customer.id = customer['_id'];
-                    return customer;
-                }));
-            })
-            .catch(error => reject(error));
-        });
-    }
-    //----------------------------------------------------------------------
-    public getCustomersPaginated(limit: number, offset: number): Promise<Models.CustomersPaginated>
+    public getProducts(limit: number, offset: number): Promise<Models.Product[]>
     {
         return new Promise((resolve, reject) =>
         {
-            Models.customerModel.find({}).limit(limit).skip(offset)
-                .then((customers: Models.Customer[]) =>
+            Models.productModel.find({}).limit(limit).skip(offset)
+                .then((products: Models.Product[]) =>
                 {
-                    const readyCustomers: Models.Customer[] = (customers.map(customer =>
+                    resolve(products.map(product =>
                     {
-                        customer.id = customer['_id'];
-                        return customer;
+                        product.id = product['_id'];
+                        return product;
+                    }));
+                })
+                .catch(error => reject(error));
+        });
+    }
+    //----------------------------------------------------------------------
+    public getProductsPaginated(limit: number, offset: number): Promise<Models.ProductsPaginated>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            Models.productModel.find({}).limit(limit).skip(offset)
+                .then((products: Models.Product[]) =>
+                {
+                    const readyProducts: Models.Product[] = (products.map(product =>
+                    {
+                        product.id = product['_id'];
+                        return product;
                     }));
 
-                    Models.customerModel.countDocuments({}, (error, count) => {
+                    Models.productModel.countDocuments({}, (error, count) =>
+                    {
                         if (error)
                         {
                             reject(error);
                         }
                         else
                         {
-                            const customersMetadata: PaginatedMetadata =
+                            const productsMetadata: PaginatedMetadata =
                                 new Models.PaginatedMetadata(count);
 
                             resolve(
-                                new Models.CustomersPaginated(
-                                    readyCustomers, customersMetadata
+                                new Models.ProductsPaginated(
+                                    readyProducts, productsMetadata
                                 )
                             );
                         }
@@ -85,40 +89,13 @@ export class CustomerService
         });
     }
     //----------------------------------------------------------------------
-    public getCustomerById(id: string): Promise<Models.Customer>
+    public getProductById(id: string): Promise<Models.Product>
     {
-        return new Promise((resolve, reject) => {
-            Models.customerModel.findById(
+        return new Promise((resolve, reject) =>
+        {
+            Models.productModel.findById(
                 id,
-                (error, customer) => {
-                    if (error)
-                    {
-                        reject(error);
-                    }
-                    else
-                    {
-                        resolve(customer);
-                    }
-                }
-            );
-        });
-    }
-    //----------------------------------------------------------------------
-    public async createCustomer(input: Models.Customer): Promise<Models.Customer>
-    {
-        const newCustomer = await Models.customerModel.create(input);
-        newCustomer.id = newCustomer._id;
-        return Promise.resolve(newCustomer);
-    }
-    //----------------------------------------------------------------------
-    public updateCustomer(input: Models.Customer): Promise<Models.Customer>
-    {
-        return new Promise((resolve, reject) => {
-            Models.customerModel.findOneAndUpdate(
-                { _id: input.id },
-                input,
-                { new: true },
-                (error, customer) =>
+                (error, product) =>
                 {
                     if (error)
                     {
@@ -126,19 +103,52 @@ export class CustomerService
                     }
                     else
                     {
-                        resolve(customer);
+                        product.id = product['_id'];
+                        resolve(product);
                     }
                 }
             );
         });
     }
     //----------------------------------------------------------------------
-    public removeCustomer(input: string): Promise<string>
+    public async createProduct(input: Models.Product): Promise<Models.Product>
     {
-        return new Promise((resolve, reject) => {
-            Models.customerModel.findOneAndRemove(
-                {_id: input},
-                (error) => {
+        const newProduct = await Models.productModel.create(input);
+        newProduct.id = newProduct._id;
+        return Promise.resolve(newProduct);
+    }
+    //----------------------------------------------------------------------
+    public updateProduct(input: Models.Product): Promise<Models.Product>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            Models.productModel.findOneAndUpdate(
+                { _id: input.id },
+                input,
+                { new: true },
+                (error, product) =>
+                {
+                    if (error)
+                    {
+                        reject(error);
+                    }
+                    else
+                    {
+                        resolve(product);
+                    }
+                }
+            );
+        });
+    }
+    //----------------------------------------------------------------------
+    public removeProduct(input: string): Promise<string>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            Models.productModel.findOneAndRemove(
+                { _id: input },
+                (error) =>
+                {
                     if (error)
                     {
                         reject(error);

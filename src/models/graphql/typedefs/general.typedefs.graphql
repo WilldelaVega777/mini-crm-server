@@ -21,10 +21,22 @@ type Order {
     price  : Int
 }
 #---------------------------------------------
+type Product {
+    id      : ID!
+    name    : String!
+    price   : Float!
+    stock   : Int!
+}
+#---------------------------------------------
 # Composite Metadata Types
 #---------------------------------------------
 type CustomerPaginated {
     customers   : [Customer!]!
+    metadata    : PaginatedMetadata!
+}
+#---------------------------------------------
+type ProductPaginated {
+    products    : [Product!]!
     metadata    : PaginatedMetadata!
 }
 #---------------------------------------------
@@ -44,10 +56,16 @@ enum CustomerType {
 # Queries (Data)
 #---------------------------------------------
 type Query {
-    # Data
+
+    # Customers:
     customers(limit: Int, offset: Int): [Customer!]!
     getCustomers(limit: Int, offset: Int): CustomerPaginated!
     getCustomer(id: ID): Customer
+
+    # Products:
+    getProducts(limit: Int, offset: Int): ProductPaginated!
+    getProduct(id: ID): Product
+
 }
 
 #---------------------------------------------
@@ -64,6 +82,13 @@ input CustomerInput {
     orders      : [OrderInput]
 }
 #---------------------------------------------
+input ProductInput {
+    id      : ID
+    name    : String!
+    price   : Float!
+    stock   : Int!
+}
+#---------------------------------------------
 input EmailInput {
     email       : String!
 }
@@ -76,7 +101,15 @@ input OrderInput {
 # Mutations
 #---------------------------------------------
 type Mutation {
+
+    # Customer
     createCustomer(input: CustomerInput) : Customer
     updateCustomer(input: CustomerInput) : Customer
     removeCustomer(input: ID!) : String
+
+    # Product
+    createProduct(input: ProductInput) : Product
+    updateProduct(input: ProductInput) : Product
+    removeProduct(input: ID!) : String
+
 }
