@@ -17,8 +17,9 @@ type Email {
 }
 #---------------------------------------------
 type Order {
-    product: String
-    price  : Int
+    quantity    : Int
+    product     : String
+    price       : Int
 }
 #---------------------------------------------
 type Product {

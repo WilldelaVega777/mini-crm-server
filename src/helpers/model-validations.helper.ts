@@ -20,7 +20,9 @@ export interface ValidationDescriptor
 // RegEx Library Section:
 //---------------------------------------------------------------------
 export enum Formats {
+    all         = '(.*?)',
     alpha       = '^^[a-zA-Z]+[\-\'\s]?[a-zA-Z ]{1,40}$',
+    alphanumeric= '^[a-zA-Z0-9_]*$',
     email       = '^\\\w+([\\\.-]?\\\w+)+@\\\w+([\\\.:]?\\w+)+(\\.[a-zA-Z0-9]{2,3})+$',
     phone       = '^ [+] * [(]{ 0, 1}[0 - 9]{ 1, 4 } [)]{ 0, 1 } [-\s\./ 0 - 9] * $',
     credit_card = '^4[0-9]{12}(?:[0-9]{3})?$',

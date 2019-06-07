@@ -17,15 +17,15 @@ export class Product extends Typegoose
     @prop({ required: false })
     public id: string;
 
-    @validations({ required: true, max: 40, min: 3, regex: Formats.alpha })
+    @validations({ required: true, max: 80, min: 3, regex: Formats.all })
     @prop({ required: true })
     public name: string;
 
-    @validations({ required: true, regex: Formats.price })
+    @validations({ required: true, min: 2, max: 1000000, regex: Formats.price })
     @prop({ required: true })
     public price: number;
 
-    @validations({ required: true, regex: Formats.quantity })
+    @validations({ required: true, min: 0, max: 10000, regex: Formats.quantity })
     @prop({ required: true })
     public stock: number;
 }
