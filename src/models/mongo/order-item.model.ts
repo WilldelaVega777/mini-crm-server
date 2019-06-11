@@ -4,38 +4,28 @@
 import * as mongoose            from 'mongoose';
 import { Typegoose }            from 'typegoose';
 import { prop }                 from 'typegoose';
-import { OrderItem }            from './order-item.model';
+import { Product }              from './product.model';
 import { OrderStatus }          from './enums/order-status.enum';
 
 //--------------------------------------------------------------------------
 // Class Section
 //--------------------------------------------------------------------------
-export class Order extends Typegoose
+export class OrderItem extends Typegoose
 {
     //----------------------------------------------------------------------
     // Public Fields Section
     //----------------------------------------------------------------------
     @prop({ required: false })
-    public id       : string;
+    public id           : string;
 
     @prop({ required: true })
-    public date     : Date;
+    public quantity     : number;
 
     @prop({ required: true })
-    public customer: string;
-
-    @prop({ required: true })
-    public status: OrderStatus;
-
-    @prop({ required: true })
-    public items    : OrderItem[];
-
-    @prop({ required: true })
-    public total: number;
-
+    public product      : Product;
 }
 
 //-------------------------------------------------------------------------------------------
 // Module Exports
 //-------------------------------------------------------------------------------------------
-export const orderModel = new Order().getModelForClass(Order);
+export const orderItemModel = new OrderItem().getModelForClass(OrderItem);

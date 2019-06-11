@@ -4,6 +4,7 @@
 import * as Models              from '../../mongo/models';
 import { CustomerService }      from '../../../services/customer.service';
 import { ProductService }       from '../../../services/product.service';
+import { OrderService }         from '../../../services/order.service';
 
 //---------------------------------------------------------------------
 // Resolvers:
@@ -12,6 +13,7 @@ export const resolvers = {
     //-----------------------------------------------------------------
     // Query Resolvers (Data):
     //-----------------------------------------------------------------
+
     Query: {
         //-------------------------------------------------------------
         // Customers
@@ -28,6 +30,7 @@ export const resolvers = {
         },
         //-------------------------------------------------------------
         // Products
+        //-------------------------------------------------------------
         getProducts: (root: any, { limit, offset }) =>
         {
             return ProductService.getInstance().getProductsPaginated(limit, offset);
@@ -35,6 +38,17 @@ export const resolvers = {
         getProduct: (root: any, { id }) =>
         {
             return ProductService.getInstance().getProductById(id);
+        },
+        //-------------------------------------------------------------
+        // Orders
+        //-------------------------------------------------------------
+        getOrders: (root: any, { limit, offset }) =>
+        {
+            return OrderService.getInstance().getOrdersPaginated(limit, offset);
+        },
+        getOrder: (root: any, { id }) =>
+        {
+            return OrderService.getInstance().getOrderById(id);
         }
     },
     //-----------------------------------------------------------------
@@ -70,6 +84,21 @@ export const resolvers = {
         removeProduct: (root: any, { input }) =>
         {
             return ProductService.getInstance().removeProduct(input);
+        },
+        //-------------------------------------------------------------
+        // Orders
+        //-------------------------------------------------------------
+        createOrder: (root: any, {input}) =>
+        {
+            return OrderService.getInstance().createOrder(input);
+        },
+        updateOrder: (root: any, {input}) =>
+        {
+            return OrderService.getInstance().updateOrder(input);
+        },
+        removeOrder: (root: any, {input}) =>
+        {
+            return OrderService.getInstance().removeOrder(input);
         }
     }
 };

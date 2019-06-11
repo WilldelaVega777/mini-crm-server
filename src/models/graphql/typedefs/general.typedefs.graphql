@@ -1,3 +1,5 @@
+scalar Date
+
 #---------------------------------------------
 # Data Types
 #---------------------------------------------
@@ -17,9 +19,17 @@ type Email {
 }
 #---------------------------------------------
 type Order {
+    id          : ID!
+    date        : Date!
+    customer    : String!
+    status      : OrderStatus!
+    items       : [OrderItem!]!
+    total       : Float!
+}
+#---------------------------------------------
+type OrderItem {
     quantity    : Int
-    product     : String
-    price       : Int
+    product     : Product
 }
 #---------------------------------------------
 type Product {
@@ -27,6 +37,7 @@ type Product {
     name    : String!
     price   : Float!
     stock   : Int!
+    reorder : Int!
 }
 #---------------------------------------------
 # Composite Metadata Types
@@ -41,6 +52,11 @@ type ProductPaginated {
     metadata    : PaginatedMetadata!
 }
 #---------------------------------------------
+type OrderPaginated {
+    orders      : [Order!]!
+    metadata    : PaginatedMetadata!
+}
+#---------------------------------------------
 type PaginatedMetadata {
     totalRecords: Int!
 }
@@ -51,6 +67,13 @@ type PaginatedMetadata {
 enum CustomerType {
     BASIC
     PREMIUM
+}
+#---------------------------------------------
+enum OrderStatus {
+    REQUESTED
+    CANCELLED
+    DISPATCHED
+    PAID
 }
 
 #---------------------------------------------
@@ -66,6 +89,10 @@ type Query {
     # Products:
     getProducts(limit: Int, offset: Int): ProductPaginated!
     getProduct(id: ID): Product
+
+    # Orders:
+    getOrders(limit: Int, offset: Int): OrderPaginated!
+    getOrder(id: ID): Order
 
 }
 
@@ -88,6 +115,7 @@ input ProductInput {
     name    : String!
     price   : Float!
     stock   : Int!
+    reorder : Int!
 }
 #---------------------------------------------
 input EmailInput {
@@ -95,8 +123,17 @@ input EmailInput {
 }
 #---------------------------------------------
 input OrderInput {
-    product     : String!
-    price       : Int!
+    id          : ID
+    date        : Date!
+    customer    : String!
+    status      : OrderStatus!
+    items       : [OrderItemInput!]!
+    total       : Float!
+}
+#---------------------------------------------
+input OrderItemInput {
+    quantity    : Int!
+    product     : ProductInput!
 }
 #---------------------------------------------
 # Mutations
@@ -112,5 +149,10 @@ type Mutation {
     createProduct(input: ProductInput) : Product
     updateProduct(input: ProductInput) : Product
     removeProduct(input: ID!) : String
+
+    # Order
+    createOrder(input: OrderInput) : Order
+    updateOrder(input: OrderInput) : Order
+    removeOrder(input: ID!) : String
 
 }

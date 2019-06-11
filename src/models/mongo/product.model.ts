@@ -28,6 +28,10 @@ export class Product extends Typegoose
     @validations({ required: true, min: 0, max: 10000, regex: Formats.quantity })
     @prop({ required: true })
     public stock: number;
+
+    @validations({ required: true, min: 0, max: 10000, regex: Formats.quantity })
+    @prop({ required: true })
+    public reorder: number;
 }
 
 //--------------------------------------------------------------------------
