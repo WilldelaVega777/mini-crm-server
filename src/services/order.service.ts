@@ -8,6 +8,9 @@ import * as mongoose            from 'mongoose';
 //--------------------------------------------------------------------------
 import * as Models              from '../models/mongo/models';
 import { PaginatedMetadata }    from '../models/mongo/models';
+import { OrderItem }            from '../models/mongo/models';
+import { OrderStatus }          from '../models/mongo/enums/order-status.enum';
+
 
 //--------------------------------------------------------------------------
 // Service Class:
@@ -111,17 +114,102 @@ export class OrderService
         });
     }
     //----------------------------------------------------------------------
+    public getOrdersByCustomer(limit: number, offset: number, customerId: string)
+        : Promise<Models.OrdersPaginated>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            Models.orderModel.find({customer: {$eq: customerId}}).limit(limit).skip(offset)
+                .then((orders: Models.Order[]) =>
+                {
+                    const readyOrders: Models.Order[] = (orders.map(order =>
+                    {
+                        order.id = order['_id'];
+                        return order;
+                    }));
+
+                    Models.orderModel.countDocuments({ customer: { $eq: customerId }}, (error, count) =>
+                    {
+                        if (error)
+                        {
+                            reject(error);
+                        }
+                        else
+                        {
+                            const ordersMetadata: PaginatedMetadata =
+                                new Models.PaginatedMetadata(count);
+
+                            resolve(
+                                new Models.OrdersPaginated(
+                                    readyOrders, ordersMetadata
+                                )
+                            );
+                        }
+                    });
+                })
+                .catch(error => reject(error));
+        });
+    }
+
+    //----------------------------------------------------------------------
     public async createOrder(input: Models.Order): Promise<Models.Order>
     {
-        const newOrder = await Models.orderModel.create(input);
-        newOrder.id = newOrder._id;
-        return Promise.resolve(newOrder);
+        return new Promise(async (resolve, reject) => {
+            try
+            {
+                const newOrder = await Models.orderModel.create(input);
+
+                newOrder.id = newOrder._id;
+
+                const customerToUpdate: Models.Customer = await Models.customerModel.findById(newOrder.customer);
+
+                if (!customerToUpdate.orders)
+                {
+                    customerToUpdate.orders = [];
+                }
+
+                customerToUpdate.orders = customerToUpdate.orders.concat([newOrder]);
+
+                await Models.customerModel.findOneAndUpdate(
+                    { _id: customerToUpdate['_id'] },
+                    customerToUpdate,
+                    { new: false }
+                );
+
+                resolve(newOrder);
+            }
+            catch (error)
+            {
+                reject(error);
+            }
+        });
     }
     //----------------------------------------------------------------------
     public updateOrder(input: Models.Order): Promise<Models.Order>
     {
         return new Promise((resolve, reject) =>
         {
+            let operation: string;
+            if (input.status === OrderStatus.DISPATCHED)
+            {
+                operation = '-';
+            }
+            else if (input.status === OrderStatus.CANCELLED)
+            {
+                operation = '+';
+            }
+            input.items.forEach(async (orderItem: OrderItem) =>
+            {
+                await Models.productModel.updateOne(
+                    { _id: orderItem.product.id },
+                    {
+                        '$inc': {
+                            'stock': `${operation}${orderItem.quantity}`
+                        }
+                    });
+            });
+
+
             Models.orderModel.findOneAndUpdate(
                 { _id: input.id },
                 input,

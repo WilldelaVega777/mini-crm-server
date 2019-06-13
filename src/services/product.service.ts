@@ -53,11 +53,17 @@ export class ProductService
         });
     }
     //----------------------------------------------------------------------
-    public getProductsPaginated(limit: number, offset: number): Promise<Models.ProductsPaginated>
+    public getProductsPaginated(limit: number, offset: number, stock: boolean = false): Promise<Models.ProductsPaginated>
     {
         return new Promise((resolve, reject) =>
         {
-            Models.productModel.find({}).limit(limit).skip(offset)
+            let filter: {};
+            if (stock)
+            {
+                filter = { stock: { $gt : 0 }};
+            }
+
+            Models.productModel.find(filter).limit(limit).skip(offset)
                 .then((products: Models.Product[]) =>
                 {
                     const readyProducts: Models.Product[] = (products.map(product =>
@@ -110,6 +116,7 @@ export class ProductService
             );
         });
     }
+
     //----------------------------------------------------------------------
     public async createProduct(input: Models.Product): Promise<Models.Product>
     {

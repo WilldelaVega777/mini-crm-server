@@ -21,7 +21,7 @@ type Email {
 type Order {
     id          : ID!
     date        : Date!
-    customer    : String!
+    customer    : ID!
     status      : OrderStatus!
     items       : [OrderItem!]!
     total       : Float!
@@ -87,12 +87,13 @@ type Query {
     getCustomer(id: ID): Customer
 
     # Products:
-    getProducts(limit: Int, offset: Int): ProductPaginated!
+    getProducts(limit: Int, offset: Int, stock: Boolean): ProductPaginated!
     getProduct(id: ID): Product
 
     # Orders:
     getOrders(limit: Int, offset: Int): OrderPaginated!
     getOrder(id: ID): Order
+    getOrdersByCustomer(limit: Int, offset: Int, id: ID): OrderPaginated!
 
 }
 

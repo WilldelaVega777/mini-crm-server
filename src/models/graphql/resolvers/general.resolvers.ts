@@ -31,9 +31,9 @@ export const resolvers = {
         //-------------------------------------------------------------
         // Products
         //-------------------------------------------------------------
-        getProducts: (root: any, { limit, offset }) =>
+        getProducts: (root: any, { limit, offset, stock }) =>
         {
-            return ProductService.getInstance().getProductsPaginated(limit, offset);
+            return ProductService.getInstance().getProductsPaginated(limit, offset, stock);
         },
         getProduct: (root: any, { id }) =>
         {
@@ -49,6 +49,10 @@ export const resolvers = {
         getOrder: (root: any, { id }) =>
         {
             return OrderService.getInstance().getOrderById(id);
+        },
+        getOrdersByCustomer(root: any, { limit, offset, id })
+        {
+            return OrderService.getInstance().getOrdersByCustomer(limit, offset, id);
         }
     },
     //-----------------------------------------------------------------
