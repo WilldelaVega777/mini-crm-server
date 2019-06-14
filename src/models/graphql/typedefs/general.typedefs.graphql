@@ -28,6 +28,7 @@ type Order {
 }
 #---------------------------------------------
 type OrderItem {
+    id          : ID
     quantity    : Int
     product     : Product
 }
@@ -126,13 +127,14 @@ input EmailInput {
 input OrderInput {
     id          : ID
     date        : Date!
-    customer    : String!
+    customer    : ID!
     status      : OrderStatus!
     items       : [OrderItemInput!]!
     total       : Float!
 }
 #---------------------------------------------
 input OrderItemInput {
+    id          : ID
     quantity    : Int!
     product     : ProductInput!
 }

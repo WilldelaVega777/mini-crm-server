@@ -16,7 +16,7 @@ export class OrderItem extends Typegoose
     // Public Fields Section
     //----------------------------------------------------------------------
     @prop({ required: false })
-    public id           : string;
+    public id           : mongoose.Types.ObjectId;
 
     @prop({ required: true })
     public quantity     : number;

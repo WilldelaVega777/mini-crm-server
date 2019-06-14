@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------------
 // Imports Section (Mongoose / Typegoose)
 //------------------------------------------------------------------------------
+import * as mongoose        from 'mongoose';
 import { Typegoose }        from 'typegoose';
 import { prop }             from 'typegoose';
 import { validations }      from '../../helpers/model-validations.helper';
@@ -15,7 +16,7 @@ export class Product extends Typegoose
     // Public Fields Section
     //----------------------------------------------------------------------
     @prop({ required: false })
-    public id: string;
+    public id: mongoose.Types.ObjectId;
 
     @validations({ required: true, max: 80, min: 3, regex: Formats.all })
     @prop({ required: true })

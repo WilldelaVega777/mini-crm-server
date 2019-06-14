@@ -3,6 +3,7 @@
 //--------------------------------------------------------------------------
 import * as mongoose            from 'mongoose';
 
+
 //--------------------------------------------------------------------------
 // Imports Section: (Models)
 //--------------------------------------------------------------------------
@@ -10,6 +11,7 @@ import * as Models              from '../models/mongo/models';
 import { PaginatedMetadata }    from '../models/mongo/models';
 import { OrderItem }            from '../models/mongo/models';
 import { OrderStatus }          from '../models/mongo/enums/order-status.enum';
+import { ObjectID, ObjectId } from 'mongodb';
 
 
 //--------------------------------------------------------------------------
@@ -119,7 +121,7 @@ export class OrderService
     {
         return new Promise((resolve, reject) =>
         {
-            Models.orderModel.find({customer: {$eq: customerId}}).limit(limit).skip(offset)
+            Models.orderModel.find({customer: {$eq: new mongoose.mongo.ObjectId(customerId)}}).limit(limit).skip(offset)
                 .then((orders: Models.Order[]) =>
                 {
                     const readyOrders: Models.Order[] = (orders.map(order =>
@@ -128,7 +130,7 @@ export class OrderService
                         return order;
                     }));
 
-                    Models.orderModel.countDocuments({ customer: { $eq: customerId }}, (error, count) =>
+                    Models.orderModel.countDocuments({ customer: { $eq: new mongoose.mongo.ObjectId(customerId) }}, (error, count) =>
                     {
                         if (error)
                         {
@@ -157,10 +159,22 @@ export class OrderService
         return new Promise(async (resolve, reject) => {
             try
             {
+                input.customer = await new mongoose.mongo.ObjectId(input.customer);
+                input.items.map(async (orderItem: OrderItem) => {
+                    orderItem['_id'] = await new mongoose.mongo.ObjectId();
+                    orderItem.id = orderItem['_id'];
+                    orderItem.product['_id'] =
+                        await new mongoose.mongo.ObjectId(orderItem.product.id);
+                    return orderItem;
+                });
+
+                // Create Order in Orders Collection
                 const newOrder = await Models.orderModel.create(input);
 
+                // Copy _id in id
                 newOrder.id = newOrder._id;
 
+                // Find Customer to update (add this order to orders collection)
                 const customerToUpdate: Models.Customer = await Models.customerModel.findById(newOrder.customer);
 
                 if (!customerToUpdate.orders)
@@ -168,8 +182,10 @@ export class OrderService
                     customerToUpdate.orders = [];
                 }
 
+                // Add new Order to Customer Object
                 customerToUpdate.orders = customerToUpdate.orders.concat([newOrder]);
 
+                // Updates Customer Object
                 await Models.customerModel.findOneAndUpdate(
                     { _id: customerToUpdate['_id'] },
                     customerToUpdate,
