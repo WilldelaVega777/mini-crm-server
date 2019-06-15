@@ -41,6 +41,12 @@ type Product {
     reorder : Int!
 }
 #---------------------------------------------
+type TopCustomer {
+    name    : String
+    total   : Float
+}
+
+#---------------------------------------------
 # Composite Metadata Types
 #---------------------------------------------
 type CustomerPaginated {
@@ -95,6 +101,9 @@ type Query {
     getOrders(limit: Int, offset: Int): OrderPaginated!
     getOrder(id: ID): Order
     getOrdersByCustomer(limit: Int, offset: Int, id: ID): OrderPaginated!
+
+    # Dashboard:
+    getTopCustomers: [TopCustomer]
 
 }
 

@@ -159,20 +159,38 @@ export class OrderService
         return new Promise(async (resolve, reject) => {
             try
             {
-                input.customer = await new mongoose.mongo.ObjectId(input.customer);
+                // Fix Id's
+                input.customer  = await new mongoose.mongo.ObjectId(input.customer);
+                input['_id']    = await new mongoose.mongo.ObjectId();
+                input['id']     = input['_id'].toString();
+
                 input.items.map(async (orderItem: OrderItem) => {
                     orderItem['_id'] = await new mongoose.mongo.ObjectId();
-                    orderItem.id = orderItem['_id'];
+                    orderItem.id = (orderItem['_id']).toString();
                     orderItem.product['_id'] =
-                        await new mongoose.mongo.ObjectId(orderItem.product.id);
+                    await new mongoose.mongo.ObjectId(orderItem.product.id);
                     return orderItem;
                 });
 
                 // Create Order in Orders Collection
                 const newOrder = await Models.orderModel.create(input);
-
-                // Copy _id in id
-                newOrder.id = newOrder._id;
+                newOrder['id'] = newOrder['_id'];
+                Models.orderModel.findOneAndUpdate(
+                    { _id: input.id },
+                    newOrder,
+                    { new: true },
+                    (error, order) =>
+                    {
+                        if (error)
+                        {
+                            reject(error);
+                        }
+                        else
+                        {
+                            resolve(order);
+                        }
+                    }
+                );
 
                 // Find Customer to update (add this order to orders collection)
                 const customerToUpdate: Models.Customer = await Models.customerModel.findById(newOrder.customer);
@@ -203,8 +221,9 @@ export class OrderService
     //----------------------------------------------------------------------
     public updateOrder(input: Models.Order): Promise<Models.Order>
     {
-        return new Promise((resolve, reject) =>
+        return new Promise(async (resolve, reject) =>
         {
+            // Recalculate Product stock based in new Order Status
             let operation: string;
             if (input.status === OrderStatus.DISPATCHED)
             {
@@ -225,7 +244,10 @@ export class OrderService
                     });
             });
 
+            // Fix Id's
+            input.customer = await new mongoose.mongo.ObjectId(input.customer);
 
+            // Update Order
             Models.orderModel.findOneAndUpdate(
                 { _id: input.id },
                 input,

@@ -17,7 +17,7 @@ export class Order extends Typegoose
     // Public Fields Section
     //----------------------------------------------------------------------
     @prop({ required: false })
-    public id       : mongoose.Types.ObjectId;
+    public id       : string;
 
     @prop({ required: true })
     public date     : Date;

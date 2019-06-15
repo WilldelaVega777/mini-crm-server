@@ -16,7 +16,7 @@ export class Product extends Typegoose
     // Public Fields Section
     //----------------------------------------------------------------------
     @prop({ required: false })
-    public id: mongoose.Types.ObjectId;
+    public id: string;
 
     @validations({ required: true, max: 80, min: 3, regex: Formats.all })
     @prop({ required: true })

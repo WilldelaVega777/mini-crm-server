@@ -5,6 +5,7 @@ import * as Models              from '../../mongo/models';
 import { CustomerService }      from '../../../services/customer.service';
 import { ProductService }       from '../../../services/product.service';
 import { OrderService }         from '../../../services/order.service';
+import { DashboardService }     from '../../../services/dashboard.service';
 
 //---------------------------------------------------------------------
 // Resolvers:
@@ -50,9 +51,16 @@ export const resolvers = {
         {
             return OrderService.getInstance().getOrderById(id);
         },
-        getOrdersByCustomer(root: any, { limit, offset, id })
+        getOrdersByCustomer: (root: any, { limit, offset, id }) =>
         {
             return OrderService.getInstance().getOrdersByCustomer(limit, offset, id);
+        },
+        //-------------------------------------------------------------
+        // Dashboard
+        //-------------------------------------------------------------
+        getTopCustomers: () =>
+        {
+            return DashboardService.getInstance().getTopCustomers();
         }
     },
     //-----------------------------------------------------------------
