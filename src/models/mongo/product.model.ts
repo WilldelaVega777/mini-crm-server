@@ -26,6 +26,9 @@ export class Product extends Typegoose
     @prop({ required: true })
     public price: number;
 
+    @prop({ required: false })
+    public projected_stock: number;
+
     @validations({ required: true, min: 0, max: 10000, regex: Formats.quantity })
     @prop({ required: true })
     public stock: number;

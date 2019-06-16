@@ -34,11 +34,12 @@ type OrderItem {
 }
 #---------------------------------------------
 type Product {
-    id      : ID!
-    name    : String!
-    price   : Float!
-    stock   : Int!
-    reorder : Int!
+    id              : ID!
+    name            : String!
+    price           : Float!
+    projected_stock : Int
+    stock           : Int!
+    reorder         : Int!
 }
 #---------------------------------------------
 type TopCustomer {
@@ -122,11 +123,12 @@ input CustomerInput {
 }
 #---------------------------------------------
 input ProductInput {
-    id      : ID
-    name    : String!
-    price   : Float!
-    stock   : Int!
-    reorder : Int!
+    id              : ID
+    name            : String!
+    price           : Float!
+    projected_stock : Int
+    stock           : Int!
+    reorder         : Int!
 }
 #---------------------------------------------
 input EmailInput {

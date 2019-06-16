@@ -60,7 +60,7 @@ export class ProductService
             let filter: {};
             if (stock)
             {
-                filter = { stock: { $gt : 0 }};
+                filter = { projected_stock: { $gt : 0 }};
             }
 
             Models.productModel.find(filter).limit(limit).skip(offset)
@@ -120,6 +120,7 @@ export class ProductService
     //----------------------------------------------------------------------
     public async createProduct(input: Models.Product): Promise<Models.Product>
     {
+        input.projected_stock = input.stock;
         const newProduct = await Models.productModel.create(input);
         newProduct.id = newProduct._id;
         return Promise.resolve(newProduct);

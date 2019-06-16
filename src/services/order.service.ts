@@ -172,6 +172,19 @@ export class OrderService
                     return orderItem;
                 });
 
+                // Adjust Projected Stock for Products in Order
+                input.items.forEach(async (orderItem: OrderItem) =>
+                {
+                    await Models.productModel.updateOne(
+                        { _id: orderItem.product.id },
+                        {
+                            '$inc': {
+                                'projected_stock': `-${orderItem.quantity}`
+                            }
+                        }
+                    );
+                });
+
                 // Create Order in Orders Collection
                 const newOrder = await Models.orderModel.create(input);
                 newOrder['id'] = newOrder['_id'];
@@ -221,27 +234,44 @@ export class OrderService
     //----------------------------------------------------------------------
     public updateOrder(input: Models.Order): Promise<Models.Order>
     {
+        let operation: string;
+
         return new Promise(async (resolve, reject) =>
         {
             // Recalculate Product stock based in new Order Status
-            let operation: string;
-            if (input.status === OrderStatus.DISPATCHED)
+            if (input.status.toString() === 'DISPATCHED')
             {
                 operation = '-';
             }
-            else if (input.status === OrderStatus.CANCELLED)
+            else if (input.status.toString() === 'CANCELLED')
             {
                 operation = '+';
             }
             input.items.forEach(async (orderItem: OrderItem) =>
             {
-                await Models.productModel.updateOne(
-                    { _id: orderItem.product.id },
-                    {
-                        '$inc': {
-                            'stock': `${operation}${orderItem.quantity}`
+                if (operation === '-')
+                {
+                    await Models.productModel.updateOne(
+                        { _id: orderItem.product.id },
+                        {
+                            '$inc': {
+                                'stock': `${operation}${orderItem.quantity}`
+                            }
                         }
-                    });
+                    );
+                }
+
+                if (operation === '+')
+                {
+                    await Models.productModel.updateOne(
+                        { _id: orderItem.product.id },
+                        {
+                            '$inc': {
+                                'projected_stock': `${operation}${orderItem.quantity}`
+                            }
+                        }
+                    );
+                }
             });
 
             // Fix Id's
