@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------
 // Imports Section:
 //---------------------------------------------------------------------
-import * as Models              from '../../mongo/models';
+import { UserService }          from '../../../services/user.service';
 import { CustomerService }      from '../../../services/customer.service';
 import { ProductService }       from '../../../services/product.service';
 import { OrderService }         from '../../../services/order.service';
@@ -14,16 +14,34 @@ export const resolvers = {
     //-----------------------------------------------------------------
     // Query Resolvers (Data):
     //-----------------------------------------------------------------
-
     Query: {
+        //-------------------------------------------------------------
+        // Security
+        //-------------------------------------------------------------
+        getCurrentLogin: (root: any, args, {currentUser}) => {
+
+            // Debug:
+            console.log(
+                `args: ${args}, currentUser: ${currentUser}, {currentUser}: ${{currentUser}}`
+            );
+
+            return UserService.getInstance().getCurrentLogin(currentUser);
+        },
+        //-------------------------------------------------------------
+        // Users
+        //-------------------------------------------------------------
+        getUsers: (root: any, {limit, offset}) => {
+            return UserService.getInstance().getUsersPaginated(limit, offset);
+        },
+        getUser: (root: any, {id}) =>
+        {
+            return UserService.getInstance().getUserById(id);
+        },
         //-------------------------------------------------------------
         // Customers
         //-------------------------------------------------------------
-        customers: (root: any, {limit, offset}) => {
-            return CustomerService.getInstance().getCustomers(limit, offset);
-        },
-        getCustomers: (root: any, {limit, offset}) => {
-              return CustomerService.getInstance().getCustomersPaginated(limit, offset);
+        getCustomers: (root: any, {limit, offset, salesman}) => {
+            return CustomerService.getInstance().getCustomersPaginated(limit, offset, salesman);
         },
         getCustomer: (root: any, {id}) =>
         {
@@ -67,6 +85,28 @@ export const resolvers = {
     // Mutation Resolvers
     //-----------------------------------------------------------------
     Mutation: {
+        //-------------------------------------------------------------
+        // Security
+        //-------------------------------------------------------------
+        authenticate: (root: any, { username, password }) =>
+        {
+            return UserService.getInstance().authenticate(username, password);
+        },
+        //-------------------------------------------------------------
+        // Users
+        //-------------------------------------------------------------
+        createUser: async (root: any, { input }) =>
+        {
+            return UserService.getInstance().createUser(input);
+        },
+        updateUser: async (root: any, { input }) =>
+        {
+            return UserService.getInstance().updateUser(input);
+        },
+        removeUser: (root: any, { input }) =>
+        {
+            return UserService.getInstance().removeUser(input);
+        },
         //-------------------------------------------------------------
         // Customers
         //-------------------------------------------------------------

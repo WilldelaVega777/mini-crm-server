@@ -50,11 +50,17 @@ export class CustomerService
         });
     }
     //----------------------------------------------------------------------
-    public getCustomersPaginated(limit: number, offset: number): Promise<Models.CustomersPaginated>
+    public getCustomersPaginated(limit: number, offset: number, salesman: string): Promise<Models.CustomersPaginated>
     {
         return new Promise((resolve, reject) =>
         {
-            Models.customerModel.find({}).limit(limit).skip(offset)
+            let filter = {};
+            if (salesman)
+            {
+                filter = { 'salesman' : salesman };
+            }
+
+            Models.customerModel.find(filter).limit(limit).skip(offset)
                 .then((customers: Models.Customer[]) =>
                 {
                     const readyCustomers: Models.Customer[] = (customers.map(customer =>
@@ -63,7 +69,7 @@ export class CustomerService
                         return customer;
                     }));
 
-                    Models.customerModel.countDocuments({}, (error, count) => {
+                    Models.customerModel.countDocuments(filter, (error, count) => {
                         if (error)
                         {
                             reject(error);

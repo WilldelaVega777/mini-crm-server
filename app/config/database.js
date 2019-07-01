@@ -11,7 +11,7 @@ class Database {
     constructor() {
     }
     connect() {
-        mongoose_1.connect('mongodb://localhost/authDB', {
+        mongoose_1.connect('mongodb://localhost/customersDB', {
             useNewUrlParser: true
         })
             .then(db => console.log('DB is connected'))

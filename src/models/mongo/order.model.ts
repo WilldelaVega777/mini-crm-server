@@ -6,7 +6,6 @@ import { Typegoose }            from 'typegoose';
 import { prop }                 from 'typegoose';
 import { OrderItem }            from './order-item.model';
 import { OrderStatus }          from './enums/order-status.enum';
-import { ObjectId } from 'bson';
 
 //--------------------------------------------------------------------------
 // Class Section
@@ -24,6 +23,9 @@ export class Order extends Typegoose
 
     @prop({ required: true })
     public customer: mongoose.Types.ObjectId;
+
+    @prop({ required: false })
+    public salesman: mongoose.Types.ObjectId;
 
     @prop({ required: true })
     public status: OrderStatus;

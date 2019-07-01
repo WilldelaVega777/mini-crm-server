@@ -15,6 +15,9 @@ import { GraphQLSchema }  from 'graphql';
 //--------------------------------------------------------------------------------
 import { typeDefs }       from '../models/graphql/typedefs/general.typedefs';
 import { resolvers }      from '../models/graphql/resolvers/general.resolvers';
+import * as dotenv        from 'dotenv';
+import * as jwt           from 'jsonwebtoken';
+
 //--------------------------------------------------------------------------------
 // Module Section
 //--------------------------------------------------------------------------------
@@ -57,7 +60,28 @@ module AppMiddlewares
             const apolloServer = new ApolloServer(
                 {
                     typeDefs,
-                    resolvers
+                    resolvers,
+                    context: async ({req}) => {
+                        const token = req.headers['authorization'];
+                        console.log(`ESTE ES EL TOKEN: ${token}`);
+
+                        if (token !== 'null')
+                        {
+                            try
+                            {
+                                const currentUser =
+                                    await jwt.verify(token, process.env.SECRET);
+
+                                req.currentUser = currentUser;
+
+                                return { currentUser };
+                            }
+                            catch (error)
+                            {
+                                console.error(error);
+                            }
+                        }
+                    }
                 }
             );
 

@@ -46,8 +46,8 @@ export class DashboardService
         return new Promise(async (resolve, reject) => {
             const mongoQuery = [
                 {
-                    '$match': {
-                        'status': 'DISPATCHED'
+                    $match: {
+                        $or: [{ status: 'DISPATCHED' }, { status: 'PAID' }]
                     }
                 },
                 {
@@ -92,6 +92,68 @@ export class DashboardService
             {
                 reject(error);
             }
+        });
+    }
+    //----------------------------------------------------------------------
+    public async getTopSellers()
+    {
+        return new Promise(async (resolve, reject) => {
+            const mongoQuery = [
+                {
+                    '$match': {
+                        '$or': [
+                            {
+                                'status': 'DISPATCHED'
+                            }, {
+                                'status': 'PAID'
+                            }
+                        ]
+                    }
+                }, {
+                    '$group': {
+                        '_id': '$salesman',
+                        'total': {
+                            '$sum': '$total'
+                        }
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'users',
+                        'localField': '_id',
+                        'foreignField': '_id',
+                        'as': 'salesman'
+                    }
+                },
+                {
+                    '$sort': {
+                        'total': -1
+                    }
+                },
+                {
+                    '$limit': 10
+                }
+            ];
+
+
+            try
+            {
+                const queryResult = await orderModel.aggregate(mongoQuery);
+                const result = queryResult.map((result) =>
+                {
+                    return ({
+                        id: result._id,
+                        name: `${result.Customer[0].first_name} ${result.Customer[0].last_name}`,
+                        total: result.total
+                    } as TopCustomer);
+                });
+                resolve(result);
+            }
+            catch (error)
+            {
+                reject(error);
+            }
+
+            resolve('');
         });
     }
 }

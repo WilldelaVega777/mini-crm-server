@@ -52,6 +52,9 @@ export class Customer extends Typegoose
     @prop({ required: false })
     public orders: Order[];
 
+    @prop({ required: false })
+    public salesman: string;
+
 }
 
 //--------------------------------------------------------------------------

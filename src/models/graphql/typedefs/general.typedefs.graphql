@@ -6,6 +6,27 @@ scalar Date
 #---------------------------------------------
 # Data Types
 #---------------------------------------------
+type User {
+    id          : ID!
+    username    : String!
+    first_name  : String!
+    last_name   : String!
+    password    : String!
+    role        : UserRole!
+}
+#---------------------------------------------
+type Token {
+    token       : String!
+}
+#---------------------------------------------
+type LoggedUser {
+    id          : ID
+    username    : String
+    first_name  : String
+    last_name   : String
+    role        : UserRole
+}
+#---------------------------------------------
 type Customer {
     id          : ID!
     first_name  : String!
@@ -15,6 +36,7 @@ type Customer {
     emails      : [Email!]!
     type        : CustomerType!
     orders      : [Order]
+    salesman    : ID
 }
 #---------------------------------------------
 type Email {
@@ -25,6 +47,7 @@ type Order {
     id          : ID!
     date        : Date!
     customer    : ID!
+    salesman    : ID
     status      : OrderStatus!
     items       : [OrderItem!]!
     total       : Float!
@@ -53,6 +76,11 @@ type TopCustomer {
 #---------------------------------------------
 # Composite Metadata Types
 #---------------------------------------------
+type UserPaginated {
+    users       : [User!]!
+    metadata    : PaginatedMetadata!
+}
+#---------------------------------------------
 type CustomerPaginated {
     customers   : [Customer!]!
     metadata    : PaginatedMetadata!
@@ -75,6 +103,11 @@ type PaginatedMetadata {
 #---------------------------------------------
 # Enums
 #---------------------------------------------
+enum UserRole {
+    SALESMAN
+    ADMINISTRATOR
+}
+#---------------------------------------------
 enum CustomerType {
     BASIC
     PREMIUM
@@ -91,10 +124,15 @@ enum OrderStatus {
 # Queries (Data)
 #---------------------------------------------
 type Query {
+    # Security:
+    getCurrentLogin : LoggedUser
+
+    # Users:
+    getUsers(limit: Int, offset: Int): UserPaginated!
+    getUser(id: ID): User
 
     # Customers:
-    customers(limit: Int, offset: Int): [Customer!]!
-    getCustomers(limit: Int, offset: Int): CustomerPaginated!
+    getCustomers(limit: Int, offset: Int, salesman: ID): CustomerPaginated!
     getCustomer(id: ID): Customer
 
     # Products:
@@ -114,8 +152,17 @@ type Query {
 #---------------------------------------------
 # Mutation Input Types
 #---------------------------------------------
+input UserInput {
+    id          : ID
+    username    : String!
+    first_name  : String!
+    last_name   : String!
+    password    : String!
+    role        : UserRole!
+}
+#---------------------------------------------
 input CustomerInput {
-    id          : ID,
+    id          : ID
     first_name  : String!
     last_name   : String!
     company     : String!
@@ -123,6 +170,7 @@ input CustomerInput {
     type        : CustomerType!
     emails      : [EmailInput!]!
     orders      : [OrderInput]
+    salesman    : ID!
 }
 #---------------------------------------------
 input ProductInput {
@@ -142,6 +190,7 @@ input OrderInput {
     id          : ID
     date        : Date!
     customer    : ID!
+    salesman    : ID
     status      : OrderStatus!
     items       : [OrderItemInput!]!
     total       : Float!
@@ -156,6 +205,13 @@ input OrderItemInput {
 # Mutations
 #---------------------------------------------
 type Mutation {
+    #Security
+    authenticate(username: String!, password: String!): Token
+
+    # User
+    createUser(input: UserInput)    : User
+    updateUser(input: UserInput)    : User
+    removeUser(input: ID!) : String
 
     # Customer
     createCustomer(input: CustomerInput) : Customer

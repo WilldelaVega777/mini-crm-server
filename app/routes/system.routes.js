@@ -13,8 +13,8 @@ var AppRoutes;
             return new SystemRoutes(rt);
         }
         defineRoutes() {
-            let systemController = new system_controller_1.SystemController();
-            this.router.get("/health", systemController.checkHealth);
+            const systemController = new system_controller_1.SystemController();
+            this.router.get('/api/health', systemController.checkHealth);
         }
     }
     AppRoutes.SystemRoutes = SystemRoutes;

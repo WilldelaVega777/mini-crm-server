@@ -52,11 +52,7 @@ module AppMiddlewares
         //------------------------------------------------------------------------------------------
         public configure()
         {
-            this.app.use(express.static(__dirname + '../../../app/public'));
-            this.app.use(express.static(__dirname + '../../../app/uploads'));
             this.app.use(serveFavicon(__dirname + '../../../app/public/images/favicon.ico'));
-            this.app.set('view engine', 'ejs');
-            this.app.set('views', __dirname + '../../../app/views');
         }
     }
 }
