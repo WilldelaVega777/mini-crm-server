@@ -72,7 +72,11 @@ type TopCustomer {
     name    : String
     total   : Float
 }
-
+#---------------------------------------------
+type TopSeller {
+    name    : String
+    total   : Float
+}
 #---------------------------------------------
 # Composite Metadata Types
 #---------------------------------------------
@@ -146,6 +150,7 @@ type Query {
 
     # Dashboard:
     getTopCustomers: [TopCustomer]
+    getTopSellers: [TopSeller]
 
 }
 

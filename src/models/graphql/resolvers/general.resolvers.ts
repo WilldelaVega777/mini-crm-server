@@ -21,9 +21,9 @@ export const resolvers = {
         getCurrentLogin: (root: any, args, {currentUser}) => {
 
             // Debug:
-            console.log(
-                `args: ${args}, currentUser: ${currentUser}, {currentUser}: ${{currentUser}}`
-            );
+            // console.log(
+            //     `args: ${args}, currentUser: ${currentUser}, {currentUser}: ${{currentUser}}`
+            // );
 
             return UserService.getInstance().getCurrentLogin(currentUser);
         },
@@ -79,6 +79,11 @@ export const resolvers = {
         getTopCustomers: () =>
         {
             return DashboardService.getInstance().getTopCustomers();
+        },
+        //-------------------------------------------------------------
+        getTopSellers: () =>
+        {
+            return DashboardService.getInstance().getTopSellers();
         }
     },
     //-----------------------------------------------------------------

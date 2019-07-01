@@ -48,7 +48,7 @@ export class UserService
     public async getCurrentLogin(pUser: TokenUser): Promise<LoggedUser>
     {
         return new Promise(async (resolve, reject) => {
-            if (!pUser)
+            if ((!pUser) || pUser.user === 'null')
             {
                 resolve({
                     id          : '',
@@ -57,7 +57,10 @@ export class UserService
                     last_name   : ''
                 } as LoggedUser);
             }
-            console.log(pUser);
+
+            // Debug
+            //console.log(pUser);
+
             try
             {
                 const currentUser: Models.User = await Models.userModel.findOne({

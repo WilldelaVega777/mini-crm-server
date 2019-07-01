@@ -161,6 +161,7 @@ export class OrderService
             {
                 // Fix Id's
                 input.customer  = await new mongoose.mongo.ObjectId(input.customer);
+                input.salesman  = await new mongoose.mongo.ObjectId(input.salesman);
                 input['_id']    = await new mongoose.mongo.ObjectId();
                 input['id']     = input['_id'].toString();
 
@@ -276,6 +277,7 @@ export class OrderService
 
             // Fix Id's
             input.customer = await new mongoose.mongo.ObjectId(input.customer);
+            input.salesman = await new mongoose.mongo.ObjectId(input.salesman);
 
             // Update Order
             Models.orderModel.findOneAndUpdate(

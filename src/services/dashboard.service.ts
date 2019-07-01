@@ -11,6 +11,7 @@ import * as Models      from '../models/mongo/models';
 import { OrderItem }    from '../models/mongo/models';
 import { orderModel }   from '../models/mongo/models';
 import { TopCustomer }  from '../models/mongo/top-customer.model';
+import { TopSeller }    from '../models/mongo/top-seller.model';
 import { OrderStatus }  from '../models/mongo/enums/order-status.enum';
 import { ObjectId }     from 'mongodb';
 
@@ -121,7 +122,7 @@ export class DashboardService
                         'from': 'users',
                         'localField': '_id',
                         'foreignField': '_id',
-                        'as': 'salesman'
+                        'as': 'Salesman'
                     }
                 },
                 {
@@ -142,9 +143,9 @@ export class DashboardService
                 {
                     return ({
                         id: result._id,
-                        name: `${result.Customer[0].first_name} ${result.Customer[0].last_name}`,
+                        name: `${result.Salesman[0].first_name} ${result.Salesman[0].last_name}`,
                         total: result.total
-                    } as TopCustomer);
+                    } as TopSeller);
                 });
                 resolve(result);
             }

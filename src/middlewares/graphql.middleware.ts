@@ -63,7 +63,6 @@ module AppMiddlewares
                     resolvers,
                     context: async ({req}) => {
                         const token = req.headers['authorization'];
-                        console.log(`ESTE ES EL TOKEN: ${token}`);
 
                         if (token !== 'null')
                         {
@@ -74,11 +73,17 @@ module AppMiddlewares
 
                                 req.currentUser = currentUser;
 
+                                // Debug:
+                                // console.log({currentUser});
+
                                 return { currentUser };
                             }
                             catch (error)
                             {
-                                console.error(error);
+                                if (error.name === 'TokenExpiredError')
+                                {
+                                    return { currentUser: { user: 'null'}};
+                                }
                             }
                         }
                     }
