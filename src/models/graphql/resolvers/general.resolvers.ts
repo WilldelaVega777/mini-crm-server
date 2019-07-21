@@ -20,11 +20,6 @@ export const resolvers = {
         //-------------------------------------------------------------
         getCurrentLogin: (root: any, args, {currentUser}) => {
 
-            // Debug:
-            // console.log(
-            //     `args: ${args}, currentUser: ${currentUser}, {currentUser}: ${{currentUser}}`
-            // );
-
             return UserService.getInstance().getCurrentLogin(currentUser);
         },
         //-------------------------------------------------------------
